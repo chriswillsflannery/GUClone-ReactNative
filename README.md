@@ -41,6 +41,11 @@ Basic features and functionality:
 
 
 Common error messages and how to debug:
+
+on iOS emulator:
+
 "No bundle url present"
 - npm install
 - react-native run-ios
+
+on Android emulator:

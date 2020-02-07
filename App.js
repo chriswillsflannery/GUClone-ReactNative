@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import GUClone from './src/GUClone';
+
 
 // const initialState = {
 //   counter: 0,
@@ -19,14 +20,15 @@ import GUClone from './src/GUClone';
 //   return state;
 // };
 
-// const store = createStore(reducer);
+const rootReducer = combineReducers({ form: formReducer });
+const store = createStore(rootReducer);
 
 class App extends React.Component {
   render() {
     return (
-      // <Provider store={store}>
-      <GUClone />
-      // </Provider>
+      <Provider store={store}>
+        <GUClone />
+      </Provider>
     );
   }
 }
