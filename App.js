@@ -1,21 +1,34 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+// import { View, Text, StyleSheet } from 'react-native';
+// import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
+import GUClone from './src/GUClone';
 
-const App = () => {
-  return (
-    <View style={styles.main}>
-      <Text>Hi World hello</Text>
-    </View>
-  );
-};
+// const initialState = {
+//   counter: 0,
+// };
 
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mainText: {},
-});
+// const reducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'INCREASE':
+//       return { counter: state.counter + 1 };
+//     case 'DECREASE':
+//       return { counter: state.counter - 1 };
+//   }
+//   return state;
+// };
+
+// const store = createStore(reducer);
+
+class App extends React.Component {
+  render() {
+    return (
+      // <Provider store={store}>
+      <GUClone />
+      // </Provider>
+    );
+  }
+}
 
 export default App;
