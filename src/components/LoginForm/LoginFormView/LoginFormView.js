@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import { Button, View, TextInput } from 'react-native';
@@ -8,7 +9,7 @@ const LoginFormView = ({ handleSubmit }) => (
   <View>
     <Field name="username" component={RTFtextInput} />
     <Field name="password" component={RTFtextInput} />
-    <Button title="Submit Login" onPress={handleSubmit} />
+    <Button title="Submit" onPress={handleSubmit} />
   </View>
 );
 

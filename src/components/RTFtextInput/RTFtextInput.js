@@ -2,8 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
-const RTFtextInput = ({ input: { onChange, value } }) => (
-  <TextInput onChangeText={onChange} value={value} style={styles.text} />
+const RTFtextInput = ({ input: { onChange, value, name } }) => (
+  <TextInput
+    placeholder={name}
+    onChangeText={onChange}
+    value={value}
+    style={styles.text}
+  />
 );
 
 RTFtextInput.propTypes = {
@@ -19,6 +24,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     padding: 10,
+    width: 300,
+    margin: 5,
   },
 });
 

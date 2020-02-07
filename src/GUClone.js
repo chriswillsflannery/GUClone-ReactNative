@@ -32,20 +32,22 @@ class GUClone extends React.Component {
     activeForm: 'login',
   }
 
-  handlePressLogin = () => this.setState({ activeForm: 'login' });
-  handlePressSignup = () => this.setState({ activeForm: 'sign up' });
+  handleAuthSwitch = () => {
+    this.setState(prevState => {
+      return (prevState.activeForm === 'login') ?
+        { activeForm: 'sign up' } :
+        { activeForm: 'login' };
+    });
+  }
 
   render() {
     const { activeForm } = this.state;
     return (
       <>
         <View style={styles.main}>
-          {activeForm === 'login' && <Text style={styles.mainText}>Log in</Text>}
-          {activeForm === 'login' && <LoginForm />}
-          {activeForm === 'sign up' && <Text style={styles.mainText}>Sign up</Text>}
-          {activeForm === 'signup' && <SignupForm />}
-          <Button title="Login" onPress={this.handlePressLogin} />
-          <Button title="Sign up" onPress={this.handlePressSignup} />
+          <Text style={styles.mainText}>{activeForm === 'login' ? 'Log in' : 'Sign up'}</Text>
+          <LoginForm style={styles.form} active={activeForm} />
+          <Button title={activeForm === 'login' ? 'Switch to Sign up' : 'Switch to Log in'} onPress={this.handleAuthSwitch} />
         </View>
       </>
     );
