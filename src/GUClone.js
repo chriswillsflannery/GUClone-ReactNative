@@ -28,8 +28,12 @@ import SignupForm from './components/SignupForm/SignupForm';
 
 
 class GUClone extends React.Component {
-  state = {
-    activeForm: 'login',
+  constructor(props) {
+    super(props);
+    const path = props.match.path === '/signup' ? 'sign up' : 'login';
+    this.state = {
+      activeForm: path,
+    };
   }
 
   handleAuthSwitch = () => {
