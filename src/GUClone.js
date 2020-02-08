@@ -48,7 +48,9 @@ class GUClone extends React.Component {
         <View style={styles.main}>
           <Text style={styles.mainText}>{activeForm === 'login' ? 'Log in' : 'Sign up'}</Text>
           <LoginForm style={styles.form} active={activeForm} />
-          <Button title={activeForm === 'login' ? 'Switch to Sign up' : 'Switch to Log in'} onPress={this.handleAuthSwitch} />
+          <View style={styles.buttonContainer}>
+            <Button color="gray" style={styles.button} title={activeForm === 'login' ? 'Switch to Sign up' : 'Switch to Log in'} onPress={this.handleAuthSwitch} />
+          </View>
         </View>
       </>
     );
@@ -64,6 +66,12 @@ const styles = StyleSheet.create({
   },
   mainText: {
     margin: 50,
+  },
+  buttonContainer: {
+    marginTop: 40,
+    width: 200,
+  },
+  button: {
   },
 });
 

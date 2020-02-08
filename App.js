@@ -28,7 +28,7 @@ const store = createStore(rootReducer);
 const Home = () => (
   <>
     <View style={styles.options}>
-      <Image style={styles.image} source={{ url: 'https://images.squarespace-cdn.com/content/5d376a91db53cc000196a3c0/1563985952435-R70WKRHKEB00BBJGBNWT/GoodUncle_Logo_Black_CMYK+%281%29+%281%29.png?content-type=image%2Fpng' }} />
+      <Image style={styles.image} source={require('./images/goodUncle.png')} />
       <Link component={TouchableOpacity} style={styles.link} to="/signup">
         <Text style={styles.text}>Sign up</Text>
       </Link>
