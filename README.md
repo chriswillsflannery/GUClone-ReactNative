@@ -45,7 +45,8 @@ Common error messages and how to debug:
 on iOS emulator:
 
 "No bundle url present"
-- npm install
-- react-native run-ios
+- While metro bundler is still running, open a new terminal window and navigate to project root
+- `npm install`
+- `react-native run-ios`
 
 on Android emulator:

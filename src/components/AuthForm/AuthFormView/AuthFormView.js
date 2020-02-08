@@ -5,9 +5,9 @@ import { Button, View, StyleSheet } from 'react-native';
 import { Field } from 'redux-form';
 import RTFtextInput from '../../RTFtextInput/RTFtextInput';
 
-const LoginFormView = ({ handleSubmit }) => (
-  <View style={styles.loginContainer}>
-    <Field name="username" component={RTFtextInput} />
+const AuthFormView = ({ handleSubmit }) => (
+  <View style={styles.AuthContainer}>
+    <Field name="(555) 555-5555" component={RTFtextInput} />
     <Field name="password" component={RTFtextInput} />
     <View style={styles.buttonContainer}>
       <Button style={styles.button} title="Submit" onPress={handleSubmit} />
@@ -16,7 +16,7 @@ const LoginFormView = ({ handleSubmit }) => (
 );
 
 const styles = StyleSheet.create({
-  loginContainer: {
+  AuthContainer: {
     alignItems: 'center',
   },
   buttonContainer: {
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   },
 });
 
-LoginFormView.propTypes = {
+AuthFormView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
-export default LoginFormView;
+export default AuthFormView;

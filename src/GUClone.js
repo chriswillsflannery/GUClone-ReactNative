@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import LoginForm from './components/LoginForm/LoginForm';
+import AuthForm from './components/AuthForm/AuthForm';
 // import { connect } from 'react-redux';
 
 // function mapStateToProps(state) {
@@ -47,7 +47,7 @@ class GUClone extends React.Component {
       <>
         <View style={styles.main}>
           <Text style={styles.mainText}>{activeForm === 'login' ? 'Log in' : 'Sign up'}</Text>
-          <LoginForm style={styles.form} active={activeForm} />
+          <AuthForm style={styles.form} active={activeForm} />
           <View style={styles.buttonContainer}>
             <Button color="gray" style={styles.button} title={activeForm === 'login' ? 'Switch to Sign up' : 'Switch to Log in'} onPress={this.handleAuthSwitch} />
           </View>
