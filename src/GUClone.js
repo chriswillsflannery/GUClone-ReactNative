@@ -5,12 +5,9 @@ import {
   Text,
   Button,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoginForm from './components/LoginForm/LoginForm';
-import SignupForm from './components/SignupForm/SignupForm';
 // import { connect } from 'react-redux';
 
 // function mapStateToProps(state) {

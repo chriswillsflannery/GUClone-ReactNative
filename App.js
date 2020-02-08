@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
@@ -28,11 +28,12 @@ const store = createStore(rootReducer);
 const Home = () => (
   <>
     <View style={styles.options}>
-      <Link style={styles.button} to="/signup">
-        <Text>Sign up</Text>
+      <Image style={styles.image} source={{ url: 'https://images.squarespace-cdn.com/content/5d376a91db53cc000196a3c0/1563985952435-R70WKRHKEB00BBJGBNWT/GoodUncle_Logo_Black_CMYK+%281%29+%281%29.png?content-type=image%2Fpng' }} />
+      <Link component={TouchableOpacity} style={styles.link} to="/signup">
+        <Text style={styles.text}>Sign up</Text>
       </Link>
-      <Link style={styles.button} to="/login">
-        <Text>Log in</Text>
+      <Link component={TouchableOpacity} style={styles.link} to="/login">
+        <Text style={styles.text}>Log in</Text>
       </Link>
     </View>
   </>
@@ -55,6 +56,11 @@ class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    width: 160,
+    height: 70,
+    marginBottom: 50,
+  },
   main: {
     flex: 1,
     justifyContent: 'center',
@@ -64,7 +70,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
+  link: {
+    borderWidth: 0.5,
+    borderColor: 'black',
+    width: 200,
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
     margin: 30,
   },
 });
