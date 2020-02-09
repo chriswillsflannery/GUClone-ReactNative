@@ -2,7 +2,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import AuthFormView from './AuthFormView/AuthFormView';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 
 const AuthForm = ({ active }) => {
   let FORM;
@@ -14,9 +14,20 @@ const AuthForm = ({ active }) => {
 
   const handleSubmit = (e) => {
     const [phoneNumber, password] = Object.values(e);
-    console.log(phoneNumber, password);
 
-    //sanitize number & pw inputs here
+    if (String(phoneNumber).length !== 10 || isNaN(Number(phoneNumber)) || typeof Number(phoneNumber) !== 'number') {
+      Alert.alert(
+        'error: Phone number must be 10 numerical digits',
+        null,
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+    }
 
     const signupHandler = async (pn, pw) => {
 

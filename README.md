@@ -42,11 +42,17 @@ Basic features and functionality:
 
 Common error messages and how to debug:
 
-on iOS emulator:
+ios:
 
-"No bundle url present"
+On screen display "No bundle url present"
 - While metro bundler is still running, open a new terminal window and navigate to project root
 - `npm install`
 - `react-native run-ios`
 
-on Android emulator:
+android:
+
+if Android studio gives you a Gradle build failure issue, within Android Studio:
+- File -> invalidate caches
+- quit android studio 
+- navigate into the android folder of your app and remove the Gradle folder
+- re-open Android studio and rebuild your configuration
