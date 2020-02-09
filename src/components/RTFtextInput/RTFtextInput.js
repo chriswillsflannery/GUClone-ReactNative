@@ -8,6 +8,7 @@ const RTFtextInput = ({ input: { onChange, value, name } }) => (
     onChangeText={onChange}
     value={value}
     style={styles.text}
+    secureTextEntry={name === 'password'}
   />
 );
 

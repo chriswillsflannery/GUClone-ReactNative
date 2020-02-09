@@ -1,7 +1,10 @@
+/* eslint-disable no-catch-shadow */
+/* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import AuthFormView from './AuthFormView/AuthFormView';
+import mockBcryptHasher from './AuthUtils/mockBcryptHasher.js';
 import { AsyncStorage, Alert } from 'react-native';
 
 const AuthForm = ({ active }) => {
@@ -15,46 +18,86 @@ const AuthForm = ({ active }) => {
   const handleSubmit = (e) => {
     const [phoneNumber, password] = Object.values(e);
 
-    if (String(phoneNumber).length !== 10 || isNaN(Number(phoneNumber)) || typeof Number(phoneNumber) !== 'number') {
-      Alert.alert(
-        'error: Phone number must be 10 numerical digits',
-        null,
-        [
-          {
-            text: 'Ok',
-            style: 'cancel',
-          },
-        ],
-        { cancelable: false },
-      );
-    }
 
-    const signupHandler = async (pn, pw) => {
+
+    const handleSignup = async (pn, pw) => {
+
+      // sanitize phone number and password input
+      if (String(phoneNumber).length !== 10 || isNaN(Number(phoneNumber)) || typeof Number(phoneNumber) !== 'number') {
+        Alert.alert(
+          'error: Phone number must be 10 numerical digits',
+          null,
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+      } else if (password.length < 6) {
+        Alert.alert(
+          'error: Password must be at least 6 characters',
+          null,
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+      }
 
       // normally you would never want to hash passwords on the frontend
       // but just imagine that we're doing this on the server:
-      const mockBcryptHasher = (pass) => {
-        const alpha = 'abcdefghijklmnopqrstuvwxyz';
-        let newPass = pass
-          .split('')
-          .map(char => {
-            let index = alpha.indexOf(char);
-            let newIndex = (index + 13) % 26;
-            return alpha[newIndex];
-          })
-          .join('');
-
-        return newPass;
-      };
-
       const hashedPw = mockBcryptHasher(pw);
       console.log('hashedPw', hashedPw);
+
+      // store phone number and hashed PW in AsyncStorage
+      const storeData = async () => {
+        //check if that number already exist in storage
+        try {
+          const value = await AsyncStorage.getItem(phoneNumber);
+          if (value === null) {
+            try {
+              await AsyncStorage.setItem(phoneNumber, hashedPw);
+            } catch (e) {
+              console.log('error: ', e.stack);
+            }
+          } else {
+            Alert.alert(
+              'error: Account with this phone number already exists!',
+              null,
+              [
+                {
+                  text: 'Ok',
+                  style: 'cancel',
+                },
+              ],
+              { cancelable: false },
+            );
+          }
+        } catch (e) {
+          console.log(e.stack);
+        }
+      };
+
+      storeData()
+        .then(res => {
+          console.log('successfully stored phone # and pw in db');
+          //navigate to the mains page
+
+        })
+        .catch(err => {
+          console.log('err: ', err);
+        });
 
     };
 
     // if signup
     if (active === 'sign up') {
-      signupHandler(phoneNumber, password)
+      handleSignup(phoneNumber, password)
         .then(res => {
           console.log('res', res);
         })
