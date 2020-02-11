@@ -51,7 +51,7 @@ On screen display "No bundle url present"
 
 android:
 
-if Android studio gives you a Gradle build failure issue, within Android Studio:
+if Android studio gives you a Gradle build/sync failure issue, within Android Studio:
 - File -> invalidate caches
 - quit android studio 
 - navigate into the android folder of your app and remove the Gradle folder

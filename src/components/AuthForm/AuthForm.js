@@ -63,7 +63,7 @@ const AuthForm = ({ active }) => {
             try {
               await AsyncStorage.setItem(phoneNumber, hashedPw);
             } catch (e) {
-              console.log('error: ', e.stack);
+              throw new Error('unable to setItem in AsyncStorage', e.stack);
             }
           } else {
             Alert.alert(
@@ -77,21 +77,32 @@ const AuthForm = ({ active }) => {
               ],
               { cancelable: false },
             );
+
+            return 'Account with this phone number already exists!';
           }
         } catch (e) {
-          console.log(e.stack);
+          throw new Error('error attempting to store data: ', e.stack);
         }
       };
 
       storeData()
         .then(res => {
-          console.log('successfully stored phone # and pw in db');
-          //navigate to the mains page
+          if (!res) {
+            // if no error thrown, redirect to next page.
 
+          }
         })
         .catch(err => {
-          console.log('err: ', err);
+          throw new Error('error attempting to store data: ', err.stack);
         });
+
+
+    };
+
+    const handleLogin = async (pn, pw) => {
+
+      // check passed-in pn and pw are already in async storage
+      // if already exist, success and redirect to next page
 
     };
 
@@ -102,7 +113,17 @@ const AuthForm = ({ active }) => {
           console.log('res', res);
         })
         .catch(err => {
-          console.log('err: ', err.stack);
+          throw new Error('error attempting to handle Signup: ', err.stack);
+        });
+    }
+
+    if (active === 'login') {
+      handleLogin(phoneNumber, password)
+        .then(res => {
+          console.log('res', res);
+        })
+        .catch(err => {
+          throw new Error('error attempting to handle Login: ', err.stack);
         });
     }
 
