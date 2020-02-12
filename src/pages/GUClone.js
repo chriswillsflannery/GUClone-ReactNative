@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import AuthForm from './components/AuthForm/AuthForm';
+import AuthForm from '../components/AuthForm/AuthForm';
 // import { connect } from 'react-redux';
 
 // function mapStateToProps(state) {

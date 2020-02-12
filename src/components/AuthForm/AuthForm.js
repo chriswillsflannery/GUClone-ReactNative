@@ -6,6 +6,7 @@ import { reduxForm } from 'redux-form';
 import AuthFormView from './AuthFormView/AuthFormView';
 import mockBcryptHasher from './AuthUtils/mockBcryptHasher.js';
 import { AsyncStorage, Alert } from 'react-native';
+import { useHistory } from 'react-router-dom';
 
 const AuthForm = ({ active }) => {
   let FORM;
@@ -15,39 +16,12 @@ const AuthForm = ({ active }) => {
     form: FORM,
   })(AuthFormView);
 
+  const history = useHistory();
+
   const handleSubmit = (e) => {
     const [phoneNumber, password] = Object.values(e);
 
-
-
     const handleSignup = async (pn, pw) => {
-
-      // sanitize phone number and password input
-      if (String(phoneNumber).length !== 10 || isNaN(Number(phoneNumber)) || typeof Number(phoneNumber) !== 'number') {
-        Alert.alert(
-          'error: Phone number must be 10 numerical digits',
-          null,
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-      } else if (password.length < 6) {
-        Alert.alert(
-          'error: Password must be at least 6 characters',
-          null,
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-      }
 
       // normally you would never want to hash passwords on the frontend
       // but just imagine that we're doing this on the server:
@@ -85,25 +59,85 @@ const AuthForm = ({ active }) => {
         }
       };
 
-      storeData()
-        .then(res => {
-          if (!res) {
-            // if no error thrown, redirect to next page.
-
-          }
-        })
-        .catch(err => {
-          throw new Error('error attempting to store data: ', err.stack);
-        });
+      // sanitize phone number and password input - usually on backend we would do more to protect against SQL injection / XSS attacks but for these purposes we'll just check for corrent formatting
+      if (String(phoneNumber).length !== 10 || isNaN(Number(phoneNumber)) || typeof Number(phoneNumber) !== 'number') {
+        Alert.alert(
+          'error: Phone number must be 10 numerical digits',
+          null,
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+      } else if (password.length < 6) {
+        Alert.alert(
+          'error: Password must be at least 6 characters',
+          null,
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+      } else {
+        storeData()
+          .then(res => {
+            if (!res) {
+              // if no error thrown, redirect to next page.
+              console.log('redirecting to mains');
+              history.push('/mains');
+              // set state to logged in
+            }
+          })
+          .catch(err => {
+            throw new Error('error attempting to store data: ', err.stack);
+          });
+      }
 
 
     };
 
     const handleLogin = async (pn, pw) => {
 
+      // sanitize phone number and password input - usually on backend we would do more to protect against SQL injection / XSS attacks but for these purposes we'll just check against items currently in AsyncStorage
       // check passed-in pn and pw are already in async storage
       // if already exist, success and redirect to next page
 
+      const hashedPw = mockBcryptHasher(pw);
+      console.log('hashedPw', hashedPw);
+
+      if (!pn || !pw) {
+        Alert.alert(
+          'error: Please input a phone number and password',
+          null,
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+      } else {
+        try {
+          console.log('hit!');
+          const value = await AsyncStorage.getItem(phoneNumber);
+          console.log('value', value);
+          if (mockBcryptHasher(pw) === value) {
+            // redirect to mains page
+            console.log('redirecting to mains');
+            history.push('/mains');
+            // set state to logged in
+          }
+        } catch (err) {
+          throw new Error('Error: unable to retrieve item from AsyncStorage');
+        }
+      }
     };
 
     // if signup
