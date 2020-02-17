@@ -29,7 +29,7 @@ const Mains = () => {
   };
 
   const viewCart = () => {
-
+    history.push('/cart');
   };
 
   return (

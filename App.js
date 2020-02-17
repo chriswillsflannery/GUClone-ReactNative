@@ -7,6 +7,7 @@ import { reducer as formReducer } from 'redux-form';
 import { NativeRouter, Route, Link } from 'react-router-native';
 import AuthMain from './src/pages/AuthMain';
 import Mains from './src/pages/Mains';
+import Cart from './src/pages/Cart';
 
 // const initialState = {
 //   counter: 0,
@@ -49,6 +50,7 @@ class App extends React.Component {
             <Route name="sign up" path="/signup" component={AuthMain} />
             <Route name="login" path="/login" component={AuthMain} />
             <Route name="mains" path="/mains" component={Mains} />
+            <Route name="cart" path="/cart" component={Cart} />
           </View>
         </NativeRouter>
       </Provider>
