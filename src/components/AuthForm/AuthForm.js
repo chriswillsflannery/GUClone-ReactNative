@@ -133,6 +133,18 @@ const AuthForm = ({ active }) => {
             console.log('redirecting to mains');
             history.push('/mains');
             // set state to logged in
+          } else {
+            Alert.alert(
+              'error: Wrong # or password!',
+              null,
+              [
+                {
+                  text: 'Ok',
+                  style: 'cancel',
+                },
+              ],
+              { cancelable: false },
+            );
           }
         } catch (err) {
           throw new Error('Error: unable to retrieve item from AsyncStorage');
