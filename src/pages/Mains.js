@@ -6,6 +6,7 @@ import Item from '../components/Item';
 
 const Mains = () => {
   const [things, setThings] = useState([]);
+  const history = useHistory();
 
 
   useEffect(() => {
@@ -22,9 +23,14 @@ const Mains = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // handleLogout() {
+  const handleLogout = () => {
+    console.log('in handle logout');
+    history.push('/login');
+  };
 
-  // }
+  const viewCart = () => {
+
+  };
 
   return (
     <>
@@ -33,11 +39,11 @@ const Mains = () => {
         <View style={styles.fixToText}>
           <Button
             title="Log Out"
-            onPress={() => handleLogout}
+            onPress={() => handleLogout()}
           />
           <Button
             title="View Cart"
-            onPress={() => Alert.alert('Right button pressed')}
+            onPress={() => viewCart()}
           />
         </View>
         <View style={styles.separator} />
