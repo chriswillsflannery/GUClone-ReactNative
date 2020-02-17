@@ -24,7 +24,7 @@ import AuthForm from '../components/AuthForm/AuthForm';
 // }
 
 
-class GUClone extends React.Component {
+class AuthMain extends React.Component {
   constructor(props) {
     super(props);
     const path = props.match.path === '/signup' ? 'sign up' : 'login';
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
 //   mapDispatchToProps,
 // )(GUClone);
 
-export default GUClone;
+export default AuthMain;

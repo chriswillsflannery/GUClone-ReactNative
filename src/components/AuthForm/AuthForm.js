@@ -17,6 +17,10 @@ const AuthForm = ({ active }) => {
   })(AuthFormView);
 
   const history = useHistory();
+  const alertButtons = {
+    text: 'Ok',
+    style: 'cancel',
+  };
 
   const handleSubmit = (e) => {
     const [phoneNumber, password] = Object.values(e);
@@ -26,7 +30,6 @@ const AuthForm = ({ active }) => {
       // normally you would never want to hash passwords on the frontend
       // but just imagine that we're doing this on the server:
       const hashedPw = mockBcryptHasher(pw);
-      console.log('hashedPw', hashedPw);
 
       // store phone number and hashed PW in AsyncStorage
       const storeData = async () => {
@@ -43,12 +46,7 @@ const AuthForm = ({ active }) => {
             Alert.alert(
               'error: Account with this phone number already exists!',
               null,
-              [
-                {
-                  text: 'Ok',
-                  style: 'cancel',
-                },
-              ],
+              [alertButtons],
               { cancelable: false },
             );
 
@@ -64,24 +62,14 @@ const AuthForm = ({ active }) => {
         Alert.alert(
           'error: Phone number must be 10 numerical digits',
           null,
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
+          [alertButtons],
           { cancelable: false },
         );
       } else if (password.length < 6) {
         Alert.alert(
           'error: Password must be at least 6 characters',
           null,
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
+          [alertButtons],
           { cancelable: false },
         );
       } else {
@@ -89,9 +77,8 @@ const AuthForm = ({ active }) => {
           .then(res => {
             if (!res) {
               // if no error thrown, redirect to next page.
-              console.log('redirecting to mains');
               history.push('/mains');
-              // set state to logged in
+              // set state to logged in?
             }
           })
           .catch(err => {
@@ -109,40 +96,26 @@ const AuthForm = ({ active }) => {
       // if already exist, success and redirect to next page
 
       const hashedPw = mockBcryptHasher(pw);
-      console.log('hashedPw', hashedPw);
 
       if (!pn || !pw) {
         Alert.alert(
           'error: Please input a phone number and password',
           null,
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
+          [alertButtons],
           { cancelable: false },
         );
       } else {
         try {
-          console.log('hit!');
           const value = await AsyncStorage.getItem(phoneNumber);
-          console.log('value', value);
           if (mockBcryptHasher(pw) === value) {
             // redirect to mains page
-            console.log('redirecting to mains');
             history.push('/mains');
-            // set state to logged in
+            // set state to logged in?
           } else {
             Alert.alert(
               'error: Wrong # or password!',
               null,
-              [
-                {
-                  text: 'Ok',
-                  style: 'cancel',
-                },
-              ],
+              [alertButtons],
               { cancelable: false },
             );
           }
@@ -152,11 +125,10 @@ const AuthForm = ({ active }) => {
       }
     };
 
-    // if signup
     if (active === 'sign up') {
       handleSignup(phoneNumber, password)
         .then(res => {
-          console.log('res', res);
+          console.log('attempted sign up.');
         })
         .catch(err => {
           throw new Error('error attempting to handle Signup: ', err.stack);
@@ -166,7 +138,7 @@ const AuthForm = ({ active }) => {
     if (active === 'login') {
       handleLogin(phoneNumber, password)
         .then(res => {
-          console.log('res', res);
+          console.log('attempted login.');
         })
         .catch(err => {
           throw new Error('error attempting to handle Login: ', err.stack);

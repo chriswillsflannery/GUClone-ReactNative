@@ -1,66 +1,56 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { SafeAreaView, View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, Text, FlatList, Button, StyleSheet, Alert } from 'react-native';
+import { useHistory } from 'react-router-dom';
+import Item from '../components/Item';
 
-const Item = ({ title }) => {
-  return (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  );
-};
+const Mains = () => {
+  const [things, setThings] = useState([]);
 
-class Mains extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      mains: [],
-    };
-  }
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('https://s3.amazonaws.com/staginggooduncledigests/products_istcki0x000h28d97a9rv9jp.json')
       .then(res => res.json())
       .then(suc => {
-        this.setState(prevState => {
-          const mains = [...prevState.mains];
-          suc.digestData.mains.forEach((main, id) => {
-            mains.push({ id: String(id), name: main.name });
-          });
-          return {
-            mains: mains,
-          };
+        console.log('fetching');
+        const myThings = [...things];
+        suc.digestData.mains.forEach((main, id) => {
+          myThings.push({ id: String(id), name: main.name });
         });
+        setThings(myThings);
       });
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
+  // handleLogout() {
 
-    return (
-      <>
-        <SafeAreaView>
-          <View style={styles.separator} />
-          <View style={styles.fixToText}>
-            <Button
-              title="Log Out"
-              onPress={() => Alert.alert('Left button pressed')}
-            />
-            <Button
-              title="View Cart"
-              onPress={() => Alert.alert('Right button pressed')}
-            />
-          </View>
-          <View style={styles.separator} />
-          <FlatList
-            data={this.state.mains}
-            renderItem={({ item }) => <Item title={item.name} />}
-            keyExtractor={item => item.id}
+  // }
+
+  return (
+    <>
+      <SafeAreaView>
+        <View style={styles.separator} />
+        <View style={styles.fixToText}>
+          <Button
+            title="Log Out"
+            onPress={() => handleLogout}
           />
-        </SafeAreaView>
-      </>
-    );
-  }
-}
+          <Button
+            title="View Cart"
+            onPress={() => Alert.alert('Right button pressed')}
+          />
+        </View>
+        <View style={styles.separator} />
+        <FlatList
+          data={things}
+          renderItem={({ item, id }) => <Item key={`${item.name}${item.id}`} title={item.name} />}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
+    </>
+  );
+};
+
 
 const styles = StyleSheet.create({
   fixToText: {

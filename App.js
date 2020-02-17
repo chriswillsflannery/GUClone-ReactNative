@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { NativeRouter, Route, Link } from 'react-router-native';
-import GUClone from './src/pages/GUClone';
+import AuthMain from './src/pages/AuthMain';
 import Mains from './src/pages/Mains';
 
 // const initialState = {
@@ -46,8 +46,8 @@ class App extends React.Component {
         <NativeRouter>
           <View style={styles.main}>
             <Route exact path="/" component={Home} />
-            <Route name="sign up" path="/signup" component={GUClone} />
-            <Route name="login" path="/login" component={GUClone} />
+            <Route name="sign up" path="/signup" component={AuthMain} />
+            <Route name="login" path="/login" component={AuthMain} />
             <Route name="mains" path="/mains" component={Mains} />
           </View>
         </NativeRouter>
